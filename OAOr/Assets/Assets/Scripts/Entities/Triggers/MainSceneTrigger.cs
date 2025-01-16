@@ -13,7 +13,7 @@ public class MainSceneTrigger : MonoBehaviour
 
     private void InstantiateManager()
     {
-
+        new InputManager();
     }
 
     private void InstantiateObject()
@@ -34,5 +34,6 @@ public class MainSceneTrigger : MonoBehaviour
     private void StartGame()
     {
         gameObject.name = "GameController";
+        InputManager.Instance.SetActive(true);
     }
 }
