@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        //Debug.DrawRay(_cameraArm.position, asd, Color.red);
     }
 
     private void Move()
@@ -32,9 +34,11 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCameraArm(Vector2 dir)
     {
-        var v3otation = _cameraArm.rotation.eulerAngles;
-        var x =dir.y + v3otation.x;
-        x = x < 180f ? Mathf.Clamp(dir.y + v3otation.x, -1, 45) : Mathf.Clamp(dir.y + v3otation.x, 320, 361);
-        _cameraArm.rotation = Quaternion.Euler(x, dir.x + v3otation.y, 0);
+        var angles = _cameraArm.rotation.eulerAngles;
+        var x = angles.x - dir.y;
+        x = x < 180f ? Mathf.Clamp(x, -1, 45) : Mathf.Clamp(x, 320, 361);
+
+        transform.rotation = Quaternion.Euler(0, dir.x + angles.y, 0);
+        _cameraArm.localRotation = Quaternion.Euler(x, 0, 0);
     }
 }
