@@ -1,47 +1,56 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlayerInputHandler
+public class PlayerBehaviour
 {
     private Rigidbody _rigidbody;
     private Transform _cameraArm;
     private PlayerStatusData _status;
+    private PlayerAnimator _animator;
 
     private float _cameraSensitivity = 0.2f;
 
     private Vector2 _moveDirection;
+    private bool _isMoveing;
+
     private event Action FixedUpdated;
 
-    public PlayerInputHandler(Rigidbody rigid, Transform camera, PlayerStatusData status)
+    public PlayerBehaviour(Rigidbody rigid, Transform camera, Animator animator, PlayerStatusData status)
     {
         _rigidbody = rigid;
         _cameraArm = camera;
         _status = status;
+
+        _animator = new();
+        _animator.Init(animator);
+
         FixedUpdated += Move;
     }
 
-    public void RegisterAllInputAction()
+    public void RegisterMovementActions()
     {
         InputManager.Instance.RegisterWASDPerformed(GetMoveDirection);
         InputManager.Instance.RegisterWASDCanceled(GetMoveDirection);
         InputManager.Instance.RegisterMouseDeltaPerformed(RotateCameraArm);
     }
 
-    public void FixedUpdate()
-    {
-        FixedUpdated?.Invoke();
-    }
-
     private void GetMoveDirection(Vector2 dir)
     {
-        if (dir.y != 1)
+        _isMoveing = dir != Vector2.zero;
+        _animator.SetMoveingState(_isMoveing, dir);
+        if (dir.y < 0)
             dir *= 0.3f;
+        else if (Math.Abs(dir.x) == 1)
+            _moveDirection *= 0.7f;
 
         _moveDirection = dir;
     }
 
     private void Move()
     {
+        if (_isMoveing == false)
+            return;
+
         var moveDir = (Vector3)_moveDirection;
         var forward = new Vector3(_cameraArm.forward.x, 0, _cameraArm.forward.z).normalized;
         var right = new Vector3(_cameraArm.right.x, 0, _cameraArm.right.z).normalized;
@@ -60,5 +69,10 @@ public class PlayerInputHandler
 
         _rigidbody.rotation = Quaternion.Euler(0, dir.x + angles.y, 0);
         _cameraArm.localRotation = Quaternion.Euler(x, 0, 0);
+    }
+
+    public void OnInvokeFixedUpdated()
+    {
+        FixedUpdated?.Invoke();
     }
 }

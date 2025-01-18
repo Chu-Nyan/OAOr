@@ -6,22 +6,22 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     [SerializeField]
     private Transform _cameraArm;
-    private PlayerInputHandler _inputHandler;
+    [SerializeField]
+    private Animator _animator;
+    private PlayerBehaviour _behaviourHandler;
 
     private PlayerStatusData _status;
-
 
     private void Awake()
     {
         _status = new();
 
-        _inputHandler = new(_rigidbody,_cameraArm,_status);
-        _inputHandler.RegisterAllInputAction();
+        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, _status);
+        _behaviourHandler.RegisterMovementActions();
     }
 
     private void FixedUpdate()
     {
-        _inputHandler.FixedUpdate();
+        _behaviourHandler.OnInvokeFixedUpdated();
     }
-
 }

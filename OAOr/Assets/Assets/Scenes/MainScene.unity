@@ -336,6 +336,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ea303162d9707d94dbe6d61c44f7815a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ea303162d9707d94dbe6d61c44f7815a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c2c5d9d995bd1e94ab101e0971b19daf, type: 2}
+    - target: {fileID: 5866666021909216657, guid: ea303162d9707d94dbe6d61c44f7815a, type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ea303162d9707d94dbe6d61c44f7815a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -684,6 +700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 1454168435}
   _cameraArm: {fileID: 1062971832}
+  _animator: {fileID: 2129953243}
 --- !u!4 &1454168433
 Transform:
   m_ObjectHideFlags: 0
@@ -875,6 +892,11 @@ MonoBehaviour:
 --- !u!4 &2129953242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ea303162d9707d94dbe6d61c44f7815a, type: 3}
+  m_PrefabInstance: {fileID: 354116058}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2129953243 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ea303162d9707d94dbe6d61c44f7815a, type: 3}
   m_PrefabInstance: {fileID: 354116058}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
