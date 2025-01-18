@@ -4,6 +4,7 @@ public class MainSceneTrigger : MonoBehaviour
 {
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         InstantiateManager();
         InstantiateObject();
         InitManager();
