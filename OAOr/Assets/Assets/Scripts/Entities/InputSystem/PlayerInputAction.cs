@@ -37,10 +37,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""MouseDelta"",
                     ""type"": ""Value"",
                     ""id"": ""bf94e1bf-ff3a-46c7-9ed6-eeb326f08c90"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -149,11 +149,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""30a20d37-cc4b-47d0-a5a6-ede9e7b6530c"",
-                    ""path"": """",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mouse"",
+                    ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -742,7 +742,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         // InGame
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_WASD = m_InGame.FindAction("WASD", throwIfNotFound: true);
-        m_InGame_Mouse = m_InGame.FindAction("Mouse", throwIfNotFound: true);
+        m_InGame_MouseDelta = m_InGame.FindAction("MouseDelta", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -823,13 +823,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_InGame;
     private List<IInGameActions> m_InGameActionsCallbackInterfaces = new List<IInGameActions>();
     private readonly InputAction m_InGame_WASD;
-    private readonly InputAction m_InGame_Mouse;
+    private readonly InputAction m_InGame_MouseDelta;
     public struct InGameActions
     {
         private @PlayerInputAction m_Wrapper;
         public InGameActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @WASD => m_Wrapper.m_InGame_WASD;
-        public InputAction @Mouse => m_Wrapper.m_InGame_Mouse;
+        public InputAction @MouseDelta => m_Wrapper.m_InGame_MouseDelta;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -842,9 +842,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @WASD.started += instance.OnWASD;
             @WASD.performed += instance.OnWASD;
             @WASD.canceled += instance.OnWASD;
-            @Mouse.started += instance.OnMouse;
-            @Mouse.performed += instance.OnMouse;
-            @Mouse.canceled += instance.OnMouse;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -852,9 +852,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @WASD.started -= instance.OnWASD;
             @WASD.performed -= instance.OnWASD;
             @WASD.canceled -= instance.OnWASD;
-            @Mouse.started -= instance.OnMouse;
-            @Mouse.performed -= instance.OnMouse;
-            @Mouse.canceled -= instance.OnMouse;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -1038,7 +1038,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     public interface IInGameActions
     {
         void OnWASD(InputAction.CallbackContext context);
-        void OnMouse(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Library.DesignPattern;
+﻿using Library.DesignPattern;
 using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : Singleton<InputManager>
@@ -9,12 +9,14 @@ public class InputManager : Singleton<InputManager>
 
     private event Action<Vector2> WASDPerformed;
     private event Action<Vector2> WASDCanceled;
+    private event Action<Vector2> MouseDeltaPerformed;
 
     public InputManager()
     {
         _action = new PlayerInputAction();
         _action.InGame.WASD.performed += OnWASDPerformed;
         _action.InGame.WASD.canceled += OnWASDCanceled;
+        _action.InGame.MouseDelta.performed += OnMouseDelta;
     }
 
     public void SetActive(bool value)
@@ -35,6 +37,11 @@ public class InputManager : Singleton<InputManager>
         WASDCanceled += action;
     }
 
+    public void RegisterMouseDeltaPerformed(Action<Vector2> action)
+    {
+        MouseDeltaPerformed += action;
+    }
+
     public void UnregisterWASDPerformed(Action<Vector2> action)
     {
         WASDPerformed -= action;
@@ -43,6 +50,11 @@ public class InputManager : Singleton<InputManager>
     public void UnregisterWASDCanceled(Action<Vector2> action)
     {
         WASDCanceled -= action;
+    }
+
+    public void UnregisterMouseDeltaPerformed(Action<Vector2> action)
+    {
+        MouseDeltaPerformed -= action;
     }
 
     #region 키 입력 이벤트
@@ -54,6 +66,11 @@ public class InputManager : Singleton<InputManager>
     private void OnWASDCanceled(InputAction.CallbackContext value)
     {
         WASDCanceled?.Invoke(value.ReadValue<Vector2>());
+    }
+
+    private void OnMouseDelta(InputAction.CallbackContext value)
+    {
+        MouseDeltaPerformed?.Invoke(value.ReadValue<Vector2>());
     }
     #endregion
 }
