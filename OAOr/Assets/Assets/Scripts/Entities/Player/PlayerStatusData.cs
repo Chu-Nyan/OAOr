@@ -1,6 +1,6 @@
 ﻿public class PlayerStatusData
 {
-    private float _speed = 1f;
+    private float _speed = 10f;
 
     public float Speed
     {
