@@ -9,7 +9,7 @@ namespace Library.DesignPattern
         private readonly Func<T> _generateDelegate;
         private readonly Action<T> _resetDelegate;
 
-        public ObjectPooling(Func<T> generate, Action<T> reset)
+        public ObjectPooling(Func<T> generate, Action<T> reset = null)
         {
             _queue = new Queue<T>();
             _generateDelegate = generate;
