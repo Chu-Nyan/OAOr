@@ -16,21 +16,6 @@ public class MainSceneTrigger : MonoBehaviour
         InitManager();
         InitObject();
         StartGame();
-
-        var buff = new List<Buff>()
-        {
-            BuffGenerator.Instance.Generate(SkillType.FireBall, StatType.HP,ProcessType.Single, ModificationType.Plus, 10, 2, true),
-            BuffGenerator.Instance.Generate(SkillType.IceBolt, StatType.HP,ProcessType.Single, ModificationType.Multiply, 0.7f, 2, true),
-            BuffGenerator.Instance.Generate(SkillType.Lightning, StatType.HP,ProcessType.Single , ModificationType.Multiply, 0.7f, 2, true),
-            BuffGenerator.Instance.Generate(SkillType.SquidInk, StatType.HP,ProcessType.Single, ModificationType.Plus, -10, 2, true),
-        };
-        var data = new UnitStatus(_buffTimer);
-
-        foreach (var item in buff)
-        {
-            data.ApplyBuff(item);
-        }
-
     }
 
     private void InstantiateManager()
