@@ -32,7 +32,7 @@ public class MainSceneTrigger : MonoBehaviour
 
     private void InitManager()
     {
-
+        NPCGenerator.Instance.Init(DataManager.Instance.UnitDataContrainer);
     }
 
     private void InitObject()
