@@ -32,7 +32,7 @@ public class DataManager : Singleton<DataManager>
         var datas = new Dictionary<UnitType, UnitStatusDTO>();
         var list = LoadAsset<UnitDataContainer>(Const.UnitDataContainer).UnitDatas;
         foreach (var item in list)
-            _unitDataContainer.Add(item.type, item);
+            datas.Add(item.type, item);
 
         return datas;
     }
