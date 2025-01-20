@@ -5,7 +5,7 @@ public class PlayerBehaviour
 {
     private Rigidbody _rigidbody;
     private Transform _cameraArm;
-    private PlayerStatusData _status;
+    private UnitStatus _status;
     private PlayerAnimator _animator;
 
     private float _cameraSensitivity = 0.2f;
@@ -15,7 +15,7 @@ public class PlayerBehaviour
 
     private event Action FixedUpdated;
 
-    public PlayerBehaviour(Rigidbody rigid, Transform camera, Animator animator, PlayerStatusData status)
+    public PlayerBehaviour(Rigidbody rigid, Transform camera, Animator animator, UnitStatus status)
     {
         _rigidbody = rigid;
         _cameraArm = camera;
@@ -54,7 +54,7 @@ public class PlayerBehaviour
         var moveDir = (Vector3)_moveDirection;
         var forward = new Vector3(_cameraArm.forward.x, 0, _cameraArm.forward.z).normalized;
         var right = new Vector3(_cameraArm.right.x, 0, _cameraArm.right.z).normalized;
-        moveDir = (forward * moveDir.y + right * moveDir.x) * _status.Speed;
+        moveDir = (forward * moveDir.y + right * moveDir.x) * _status[StatType.Speed].ModificationValue;
 
         var nextPos = Vector3.MoveTowards(_rigidbody.position, _rigidbody.position + moveDir, 3 * Time.fixedDeltaTime);
         _rigidbody.MovePosition(nextPos);

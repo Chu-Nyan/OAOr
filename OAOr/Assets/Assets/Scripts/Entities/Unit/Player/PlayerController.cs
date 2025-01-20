@@ -10,13 +10,12 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private PlayerBehaviour _behaviourHandler;
 
-    private PlayerStatusData _status;
+    private UnitStatus _status;
 
-    private void Awake()
+    private void Init(UnitStatus status)
     {
-        _status = new();
-
-        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, _status);
+        _status = status;
+        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, status);
         _behaviourHandler.RegisterMovementActions();
     }
 
