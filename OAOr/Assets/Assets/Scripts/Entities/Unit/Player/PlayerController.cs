@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private UnitStatus _status;
 
-    private void Init(UnitStatus status)
+    public void Init(UnitStatus status)
     {
         _status = status;
         _behaviourHandler = new(_rigidbody, _cameraArm, _animator, status);
