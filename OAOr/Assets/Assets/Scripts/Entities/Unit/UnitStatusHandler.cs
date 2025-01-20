@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class UnitStatus
 {
-    private static readonly StatType[] _types = (StatType[])Enum.GetValues(typeof(StatType));
     private static BuffTimer _buffTimer;
 
+    private UnitType _type;
     private readonly Dictionary<StatType, Stat> _stats;
     private readonly List<Buff> _buffs;
 
@@ -14,17 +13,21 @@ public class UnitStatus
         get => _stats[type];
     }
 
-    public UnitStatus(BuffTimer timer)
+    public UnitStatus(UnitType type)
     {
-        _stats = new();
         _buffs = new();
-        _buffTimer = timer;
+        _stats = Utilities.GenerateStats();
+    }
 
-        for (int i = 0; i < _types.Length; i++)
-        {
-            var type = _types[i];
-            _stats.Add(type, new(type, 10, 10));
-        }
+    public static void InitBuffTimer(BuffTimer buffTimer)
+    {
+        _buffTimer = buffTimer;
+    }
+
+    public void InitData(UnitStatusDTO dto)
+    {
+        _type = dto.type;
+        dto.ConvertData(_stats);
     }
 
     public void ApplyBuff(Buff buff)

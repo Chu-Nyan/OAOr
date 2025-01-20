@@ -12,10 +12,20 @@ public class PlayerController : MonoBehaviour
 
     private UnitStatus _status;
 
-    public void Init(UnitStatus status)
+    public Transform CameraArm
     {
-        _status = status;
-        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, status);
+        get => _cameraArm;
+    }
+
+    public void Awake()
+    {
+        _status = new(UnitType.Player);
+    }
+
+    public void Init(UnitStatusDTO dto)
+    {
+        _status.InitData(dto);
+        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, _status);
         _behaviourHandler.RegisterMovementActions();
     }
 

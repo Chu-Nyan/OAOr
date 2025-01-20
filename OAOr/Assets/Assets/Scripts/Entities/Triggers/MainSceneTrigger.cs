@@ -4,7 +4,6 @@ using UnityEngine;
 public class MainSceneTrigger : MonoBehaviour
 {
     private BuffTimer _buffTimer;
-    [SerializeField]
     private PlayerController _playerController;
     [SerializeField]
     private CameraController _camera;
@@ -43,7 +42,7 @@ public class MainSceneTrigger : MonoBehaviour
     private void InstantiateObject()
     {
         _buffTimer = gameObject.AddComponent<BuffTimer>();
-        _playerController = Instantiate(_playerController);
+        _playerController = Instantiate(DataManager.Instance.LoadAsset<PlayerController>(Const.PlayerPrefab));
     }
 
     private void InitManager()
@@ -53,11 +52,12 @@ public class MainSceneTrigger : MonoBehaviour
 
     private void InitObject()
     {
-        _playerController.Init(new UnitStatus(_buffTimer));
+        _playerController.Init(DataManager.Instance.GetPlayerData());
     }
 
     private void StartGame()
     {
+        _camera.SetTrackingTarget(_playerController.CameraArm);
         gameObject.name = "GameController";
         InputManager.Instance.SetActive(true);
     }
