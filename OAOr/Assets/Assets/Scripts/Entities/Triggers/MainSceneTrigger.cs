@@ -6,6 +6,8 @@ public class MainSceneTrigger : MonoBehaviour
     private BuffTimer _buffTimer;
     [SerializeField]
     private PlayerController _playerController;
+    [SerializeField]
+    private CameraController _camera;
 
     private void Awake()
     {
