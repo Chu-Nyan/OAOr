@@ -36,6 +36,7 @@ public class MainSceneTrigger : MonoBehaviour
 
     private void InstantiateManager()
     {
+        new DataManager();
         new InputManager();
     }
 
