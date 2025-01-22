@@ -13,7 +13,7 @@ public class BuffGenerator : Singleton<BuffGenerator>
         _pool = new(() => new());
     }
 
-    public Buff Generate(SkillType skillType, StatType statType, ProcessType processType, ModificationType modifyType, float value, float durationTime, bool isReturnValue)
+    public Buff Generate(BuffType skillType, StatType statType, ProcessType processType, ModificationType modifyType, float value, float durationTime, bool isReturnValue)
     {
         var item = _pool.Dequeue();
         var data = new BuffData();

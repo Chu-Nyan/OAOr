@@ -1,6 +1,6 @@
 ﻿public class BuffData
 {
-    public SkillType SkillType;
+    public BuffType BuffType;
     public StatType StatType;
     public ProcessType ProcessType;
     public ModificationType ModificationType;
@@ -10,9 +10,9 @@
 
     public float NextRunTime;
 
-    public void Init(SkillType skillType, StatType statType, ProcessType processType, ModificationType modifyType, float value, float durationTime, bool isReturnValue)
+    public void Init(BuffType buffType, StatType statType, ProcessType processType, ModificationType modifyType, float value, float durationTime, bool isReturnValue)
     {
-        SkillType = skillType;
+        BuffType = buffType;
         StatType = statType;
         ProcessType = processType;
         ModificationType = modifyType;

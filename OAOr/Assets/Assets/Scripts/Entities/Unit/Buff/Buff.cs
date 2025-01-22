@@ -47,7 +47,7 @@ public class Buff : IPrioritizable<float>
 
     public static bool IsSameBuff(Buff a, Buff b)
     {
-        return a._data.SkillType == b._data.SkillType && a._data.StatType == b._data.StatType;
+        return a._data.BuffType == b._data.BuffType && a._data.StatType == b._data.StatType;
     }
 
     public void Init(BuffData data)

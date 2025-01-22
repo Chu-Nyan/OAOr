@@ -15,6 +15,14 @@ public enum SkillType
     SquidInk
 }
 
+public enum BuffType
+{
+    Burn,
+    Slow,
+    Cold,
+    Freeze,
+}
+
 public enum UnitType
 {
     Player = 0,
