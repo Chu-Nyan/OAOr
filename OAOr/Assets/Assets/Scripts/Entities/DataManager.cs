@@ -6,15 +6,22 @@ using UnityEngine;
 public class DataManager : Singleton<DataManager>
 {
     private readonly Dictionary<UnitType, UnitStatusDTO> _unitDataContainer;
+    private readonly Dictionary<BuffType, BuffData> _buffDataContainer;
 
     public Dictionary<UnitType, UnitStatusDTO> UnitDataContrainer
     {
         get => _unitDataContainer;
     }
 
+    public Dictionary<BuffType, BuffData> BuffDataContainer
+    {
+        get => _buffDataContainer;
+    }
+
     public DataManager()
     {
         _unitDataContainer = LoadObjectData<UnitStatusDTO, UnitType>(Const.UnitDataContainer);
+        _buffDataContainer = LoadObjectData<BuffData, BuffType>(Const.BuffDataContainer);
     }
 
     public UnitStatusDTO GetPlayerData()

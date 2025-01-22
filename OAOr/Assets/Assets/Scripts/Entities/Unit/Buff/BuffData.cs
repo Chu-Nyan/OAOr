@@ -1,4 +1,7 @@
-﻿public class BuffData
+﻿using System;
+
+[Serializable]
+public class BuffData
 {
     public BuffType BuffType;
     public StatType StatType;

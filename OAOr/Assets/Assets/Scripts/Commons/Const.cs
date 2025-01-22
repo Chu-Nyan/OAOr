@@ -7,5 +7,6 @@ public static class Const
     // 데이터
 
     public const string UnitDataContainer = "UnitDataContainer";
+    public const string BuffDataContainer = "BuffDataContainer";
 
 }
