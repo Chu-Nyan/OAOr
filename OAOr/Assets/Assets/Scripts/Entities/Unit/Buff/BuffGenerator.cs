@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BuffGenerator : Singleton<BuffGenerator>
 {
     private readonly ObjectPooling<Buff> _pool;
+    private Dictionary<BuffType, BuffData> _data;
 
     private event Action<Buff> Generated;
 
@@ -13,11 +14,15 @@ public class BuffGenerator : Singleton<BuffGenerator>
         _pool = new(() => new());
     }
 
-    public Buff Generate(BuffType skillType, StatType statType, ProcessType processType, ModificationType modifyType, float value, float durationTime, bool isReturnValue)
+    public void Init()
+    {
+        _data = DataManager.Instance.BuffDataContainer;
+    }
+
+    public Buff Generate(BuffType skillType)
     {
         var item = _pool.Dequeue();
-        var data = new BuffData();
-        data.Init(skillType, statType, processType, modifyType, value, durationTime, isReturnValue);
+        var data = _data[skillType];
         item.Init(data);
         item.RegisterEnded(AddPool);
         Generated?.Invoke(item);
