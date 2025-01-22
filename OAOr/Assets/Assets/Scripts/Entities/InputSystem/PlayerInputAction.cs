@@ -44,6 +44,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Value"",
+                    ""id"": ""42e42dc3-d739-456e-a877-1d024c53fb44"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -154,6 +163,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06f9de66-f7a9-459e-98a4-f8d8017d9b81"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -743,6 +763,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_WASD = m_InGame.FindAction("WASD", throwIfNotFound: true);
         m_InGame_MouseDelta = m_InGame.FindAction("MouseDelta", throwIfNotFound: true);
+        m_InGame_LeftClick = m_InGame.FindAction("LeftClick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -824,12 +845,14 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private List<IInGameActions> m_InGameActionsCallbackInterfaces = new List<IInGameActions>();
     private readonly InputAction m_InGame_WASD;
     private readonly InputAction m_InGame_MouseDelta;
+    private readonly InputAction m_InGame_LeftClick;
     public struct InGameActions
     {
         private @PlayerInputAction m_Wrapper;
         public InGameActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @WASD => m_Wrapper.m_InGame_WASD;
         public InputAction @MouseDelta => m_Wrapper.m_InGame_MouseDelta;
+        public InputAction @LeftClick => m_Wrapper.m_InGame_LeftClick;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -845,6 +868,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -855,6 +881,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -1039,6 +1068,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     {
         void OnWASD(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
