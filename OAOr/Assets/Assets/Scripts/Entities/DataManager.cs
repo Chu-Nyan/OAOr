@@ -5,29 +5,19 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
-    private readonly Dictionary<UnitType, UnitStatusDTO> _unitDataContainer;
-    private readonly Dictionary<BuffType, BuffData> _buffDataContainer;
-
-    public Dictionary<UnitType, UnitStatusDTO> UnitDataContrainer
-    {
-        get => _unitDataContainer;
-    }
-
-    public Dictionary<BuffType, BuffData> BuffDataContainer
-    {
-        get => _buffDataContainer;
-    }
+    public readonly Dictionary<UnitType, UnitStatusDTO> UnitDataContainer;
+    public readonly Dictionary<BuffType, BuffData> BuffDataContainer;
 
     public DataManager()
     {
-        _unitDataContainer = LoadObjectData<UnitStatusDTO, UnitType>(Const.UnitDataContainer);
-        _buffDataContainer = LoadObjectData<BuffData, BuffType>(Const.BuffDataContainer);
+        UnitDataContainer = LoadObjectData<UnitStatusDTO, UnitType>(Const.UnitDataContainer);
+        BuffDataContainer = LoadObjectData<BuffData, BuffType>(Const.BuffDataContainer);
     }
 
     public UnitStatusDTO GetPlayerData()
     {
         // TODO : 저장된 데이터 읽을 수 있게
-        return _unitDataContainer[UnitType.Player];
+        return UnitDataContainer[UnitType.Player];
     }
 
     public T LoadAsset<T>(string path) where T : UnityEngine.Object
