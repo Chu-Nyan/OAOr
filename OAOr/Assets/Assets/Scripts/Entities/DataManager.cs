@@ -7,11 +7,13 @@ public class DataManager : Singleton<DataManager>
 {
     public readonly Dictionary<UnitType, UnitStatusDTO> UnitDataContainer;
     public readonly Dictionary<BuffType, BuffData> BuffDataContainer;
+    public readonly Dictionary<SkillType, SkillData> SkillDataContainer;
 
     public DataManager()
     {
         UnitDataContainer = LoadObjectData<UnitStatusDTO, UnitType>(Const.UnitDataContainer);
         BuffDataContainer = LoadObjectData<BuffData, BuffType>(Const.BuffDataContainer);
+        SkillDataContainer = LoadObjectData<SkillData, SkillType>(Const.SkillDataContainer);
     }
 
     public UnitStatusDTO GetPlayerData()
