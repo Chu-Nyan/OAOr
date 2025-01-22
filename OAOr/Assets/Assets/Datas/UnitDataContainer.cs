@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UnitDatas", menuName = "Scriptable Objects/UnitDatas")]
-public class UnitDataContainer : ScriptableObject
+public class UnitDataContainer : ScriptableObject, IContainerProvier<UnitStatusDTO, UnitType>
 {
-    public List<UnitStatusDTO> UnitDatas;
+    [SerializeField]
+    private List<UnitStatusDTO> UnitDatas;
+
+    public List<UnitStatusDTO> GetDataList => UnitDatas;
+
+    public UnitType GetKeyType(int index)
+    {
+        return UnitDatas[index].type;
+    }
 }
 
 [Serializable]

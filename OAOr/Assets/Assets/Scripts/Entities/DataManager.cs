@@ -1,4 +1,5 @@
 ﻿using Library.DesignPattern;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class DataManager : Singleton<DataManager>
 
     public DataManager()
     {
-        _unitDataContainer = LoadUnitData();
+        _unitDataContainer = LoadObjectData<UnitStatusDTO, UnitType>(Const.UnitDataContainer);
     }
 
     public UnitStatusDTO GetPlayerData()
@@ -22,17 +23,21 @@ public class DataManager : Singleton<DataManager>
         return _unitDataContainer[UnitType.Player];
     }
 
-    public T LoadAsset<T>(string path) where T : Object
+    public T LoadAsset<T>(string path) where T : UnityEngine.Object
     {
         return Resources.Load<T>(path);
     }
 
-    private Dictionary<UnitType, UnitStatusDTO> LoadUnitData()
+    private Dictionary<K, T> LoadObjectData<T,K>(string path) where K : Enum
     {
-        var datas = new Dictionary<UnitType, UnitStatusDTO>();
-        var list = LoadAsset<UnitDataContainer>(Const.UnitDataContainer).UnitDatas;
-        foreach (var item in list)
-            datas.Add(item.type, item);
+        var datas = new Dictionary<K, T>();
+        var so = LoadAsset<ScriptableObject>(path);
+        var container = (IContainerProvier<T,K>) so;
+        var list = container.GetDataList;
+        for (int i = 0; i < list.Count; i++)
+        {
+            datas.Add(container.GetKeyType(i), list[i]);
+        }
 
         return datas;
     }
