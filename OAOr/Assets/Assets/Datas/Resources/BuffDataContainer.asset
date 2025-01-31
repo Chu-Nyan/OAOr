@@ -17,8 +17,8 @@ MonoBehaviour:
     StatType: 0
     ProcessType: 0
     ModificationType: 0
-    Value: 10
-    DurationTime: 10
+    Value: -10
+    DurationTime: 1
     IsReturnValue: 0
     NextRunTime: 0
   - BuffType: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
     ProcessType: 0
     ModificationType: 1
     Value: 0.2
-    DurationTime: 10
+    DurationTime: 2
     IsReturnValue: 1
     NextRunTime: 0
   - BuffType: 2
@@ -34,7 +34,7 @@ MonoBehaviour:
     ProcessType: 0
     ModificationType: 1
     Value: 0.4
-    DurationTime: 10
+    DurationTime: 3
     IsReturnValue: 1
     NextRunTime: 0
   - BuffType: 3

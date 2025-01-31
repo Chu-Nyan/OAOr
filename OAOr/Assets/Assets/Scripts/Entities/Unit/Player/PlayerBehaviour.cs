@@ -7,6 +7,7 @@ public class PlayerBehaviour
     private Transform _cameraArm;
     private UnitStatus _status;
     private PlayerAnimator _animator;
+    private Transform _shootingPivot;
 
     private float _cameraSensitivity = 0.2f;
 
@@ -15,11 +16,12 @@ public class PlayerBehaviour
 
     private event Action FixedUpdated;
 
-    public PlayerBehaviour(Rigidbody rigid, Transform camera, Animator animator, UnitStatus status)
+    public PlayerBehaviour(Rigidbody rigid, Transform camera, Animator animator, UnitStatus status, Transform pivot)
     {
         _rigidbody = rigid;
         _cameraArm = camera;
         _status = status;
+        _shootingPivot = pivot;
 
         _animator = new();
         _animator.Init(animator);
@@ -32,6 +34,16 @@ public class PlayerBehaviour
         InputManager.Instance.RegisterWASDPerformed(GetMoveDirection);
         InputManager.Instance.RegisterWASDCanceled(GetMoveDirection);
         InputManager.Instance.RegisterMouseDeltaPerformed(RotateCameraArm);
+        InputManager.Instance.RegisterLeftClickStarted(UseSkill);
+    }
+
+    private void UseSkill()
+    {
+        var skill = new Skill(DataManager.Instance.SkillDataContainer[SkillType.FireBall]);
+        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        
+        skill.Use(_shootingPivot.position, ray.direction);
     }
 
     private void GetMoveDirection(Vector2 dir)

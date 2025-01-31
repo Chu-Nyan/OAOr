@@ -4,9 +4,9 @@ public class Skill
 {
     private SkillData _skillData;
 
-    public SkillData SkillData 
-    { 
-        get => _skillData; 
+    public SkillData SkillData
+    {
+        get => _skillData;
     }
 
     public Skill(SkillData skillData)
@@ -14,9 +14,11 @@ public class Skill
         _skillData = skillData;
     }
 
-    public void Use(Vector3 shootPos, Vector3 shootDir)
+    public void Use(Vector3 shootPos, Vector3 forward)
     {
-        // TODO : 발사 하기
-        // 투사체를 Data를 이용하여 만들기
+        var pro = ProjectileGenerator.Instance
+            .Ready(this)
+            .SetShootingTransform(shootPos, forward)
+            .Generator();
     }
 }

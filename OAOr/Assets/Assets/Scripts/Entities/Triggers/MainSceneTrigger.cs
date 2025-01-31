@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MainSceneTrigger : MonoBehaviour
 {
-    private BuffTimer _buffTimer;
     private PlayerController _playerController;
     [SerializeField]
     private CameraController _camera;
@@ -22,22 +21,27 @@ public class MainSceneTrigger : MonoBehaviour
     {
         new DataManager();
         new InputManager();
+        new ProjectileGenerator();
+        new BuffGenerator();
+
+        gameObject.AddComponent<BuffTimer>();
     }
 
     private void InstantiateObject()
     {
-        _buffTimer = gameObject.AddComponent<BuffTimer>();
         _playerController = Instantiate(DataManager.Instance.LoadAsset<PlayerController>(Const.PlayerPrefab));
     }
 
     private void InitManager()
     {
         NPCGenerator.Instance.Init(DataManager.Instance.UnitDataContainer);
+        ProjectileGenerator.Instance.Init();
+        BuffGenerator.Instance.Init();
     }
 
     private void InitObject()
     {
-        _playerController.Init(DataManager.Instance.GetPlayerData());
+        _playerController.Init(DataManager.Instance.GetPlayerData(), _camera.transform);
     }
 
     private void StartGame()

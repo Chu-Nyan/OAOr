@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Library.DesignPattern;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffTimer : MonoBehaviour
+public class BuffTimer : MonoBehaviourSingleton<BuffTimer>
 {
     private const float RefreshCycle = 0.1f;
     private float _refreshTime;
     private PriorityQueue<Buff, float> _singleBuff;
     private HashSet<Buff> _loopBuff;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _singleBuff = new(64);
         _loopBuff = new(64);
     }

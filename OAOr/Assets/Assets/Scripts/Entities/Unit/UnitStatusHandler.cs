@@ -2,8 +2,6 @@
 
 public class UnitStatus
 {
-    private static BuffTimer _buffTimer;
-
     private UnitType _type;
     private readonly Dictionary<StatType, Stat> _stats;
     private readonly List<Buff> _buffs;
@@ -17,11 +15,6 @@ public class UnitStatus
     {
         _buffs = new();
         _stats = Utilities.GenerateStats();
-    }
-
-    public static void InitBuffTimer(BuffTimer buffTimer)
-    {
-        _buffTimer = buffTimer;
     }
 
     public void InitData(UnitStatusDTO dto)
@@ -41,7 +34,7 @@ public class UnitStatus
             _buffs.Add(buff);
             buff.RegisterRuned(AddModificationValue);
             buff.RegisterEnded(RemoveModificationValue);
-            _buffTimer.AddBuff(buff);
+            BuffTimer.Instance.AddBuff(buff);
         }
     }
 

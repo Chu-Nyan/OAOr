@@ -6,9 +6,9 @@ namespace Library.DesignPattern
     {
         private static T _instance;
 
-        public static T Instance 
-        { 
-            get 
+        public static T Instance
+        {
+            get
             {
                 if (_instance == null)
                 {
@@ -16,8 +16,8 @@ namespace Library.DesignPattern
                     _instance = new GameObject(name).AddComponent<T>();
                 }
 
-                return _instance; 
-            } 
+                return _instance;
+            }
         }
 
         protected virtual void Awake()
