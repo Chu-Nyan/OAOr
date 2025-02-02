@@ -12,6 +12,8 @@ public class InputManager : Singleton<InputManager>
     private event Action<Vector2> MouseDeltaPerformed;
     private event Action LeftClickStarted;
     private event Action LeftClickCanceled;
+    private event Action RightClickCanceled;
+    private event Action RightClickStarted;
 
     public InputManager()
     {
@@ -21,7 +23,9 @@ public class InputManager : Singleton<InputManager>
         _action.InGame.MouseDelta.performed += OnMouseDelta;
         _action.InGame.LeftClick.started += OnLeftClickStarted;
         _action.InGame.LeftClick.canceled += OnLeftClickCanceled;
-    }
+        _action.InGame.RightClick.canceled += OnRightClickCanceled;
+        _action.InGame.RightClick.started += OnRightClickStarted;
+    }   
 
     public void SetActive(bool value)
     {
@@ -71,6 +75,14 @@ public class InputManager : Singleton<InputManager>
         LeftClickCanceled += action;
     }
 
+    public void RegisterRightClickCanceled(Action action)
+    {
+        RightClickCanceled += action;
+    }
+    public void RegisterRightClickStarted(Action action)
+    {
+        RightClickStarted += action;
+    }
 
     #region 키 입력 이벤트
     private void OnWASDPerformed(InputAction.CallbackContext value)
@@ -96,6 +108,16 @@ public class InputManager : Singleton<InputManager>
     private void OnLeftClickCanceled(InputAction.CallbackContext value)
     {
         LeftClickCanceled?.Invoke();
+    }
+
+    private void OnRightClickStarted(InputAction.CallbackContext value)
+    {
+        RightClickStarted?.Invoke();
+    }
+
+    private void OnRightClickCanceled(InputAction.CallbackContext value)
+    {
+        RightClickCanceled?.Invoke();
     }
     #endregion
 }
