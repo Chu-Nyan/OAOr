@@ -12,13 +12,16 @@ public class PlayerBehaviour
 
     private float _cameraSensitivity = 0.2f;
 
+
     private Vector2 _moveDirection;
     private bool _isMoveing;
+    private Transform _aimGuide;
 
     private event Action FixedUpdated;
 
     public PlayerBehaviour(Rigidbody rigid, Transform camera, Animator animator, UnitStatus status, Transform pivot, CameraController cameraController)
     {
+        _aimGuide = GameObject.Instantiate(Resources.Load<Transform>(Const.AimGuidePrefab));
         _rigidbody = rigid;
         _cameraArm = camera;
         _status = status;
@@ -48,7 +51,7 @@ public class PlayerBehaviour
         var dir = ray.direction;
         if (Physics.Raycast(ray, out var hitinfo) == true)
             dir = (hitinfo.point - _shootingPivot.position).normalized;
-        
+
         skill.Use(_shootingPivot.position, dir);
     }
 
@@ -92,15 +95,32 @@ public class PlayerBehaviour
     public void TurnOnShootingMode()
     {
         _cameraController.ChangeCameraMode(false);
+        FixedUpdated += TrackAimg;
     }
 
     public void TurnOffShootingMode()
     {
         _cameraController.ChangeCameraMode(true);
+        FixedUpdated -= TrackAimg;
     }
 
     public void OnInvokeFixedUpdated()
     {
         FixedUpdated?.Invoke();
+    }
+
+    private void TrackAimg()
+    {
+        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+        if (Physics.Raycast(ray, out var hitinfo) == true)
+        {
+            var dir = (hitinfo.point - _shootingPivot.position).normalized;
+            ray = new Ray(_shootingPivot.position, dir);
+            var result = Physics.Raycast(ray, out hitinfo, 1);
+            if (result == true)
+                _aimGuide.transform.position = hitinfo.point;
+
+            _aimGuide.gameObject.SetActive(result);
+        }
     }
 }

@@ -4,6 +4,8 @@ public static class Const
     public const string PlayerPrefab = "Player";
     public const string NPCPrefab = "NPC";
     public const string ProjectilePrefab = "Projectile";
+    public const string AimGuidePrefab = "AimGuide";
+
 
     // 데이터
     public const string UnitDataContainer = "UnitDataContainer";
