@@ -29,10 +29,10 @@ public class PlayerController : MonoBehaviour, IStatProvider
         _status = new(UnitType.Player);
     }
 
-    public void Init(UnitStatusDTO dto, Transform camera)
+    public void Init(UnitStatusDTO dto, CameraController camera)
     {
         _status.InitData(dto);
-        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, _status, _shootingPivot);
+        _behaviourHandler = new(_rigidbody, _cameraArm, _animator, _status, _shootingPivot, camera);
         _behaviourHandler.RegisterMovementActions();
     }
 

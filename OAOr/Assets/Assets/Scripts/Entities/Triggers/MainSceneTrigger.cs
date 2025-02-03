@@ -41,7 +41,7 @@ public class MainSceneTrigger : MonoBehaviour
 
     private void InitObject()
     {
-        _playerController.Init(DataManager.Instance.GetPlayerData(), _camera.transform);
+        _playerController.Init(DataManager.Instance.GetPlayerData(), _camera);
     }
 
     private void StartGame()
