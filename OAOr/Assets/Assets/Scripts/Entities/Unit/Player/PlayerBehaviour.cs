@@ -41,9 +41,11 @@ public class PlayerBehaviour
     {
         var skill = new Skill(DataManager.Instance.SkillDataContainer[SkillType.FireBall]);
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
-
+        var dir = ray.direction;
+        if (Physics.Raycast(ray, out var hitinfo) == true)
+            dir = (hitinfo.point - _shootingPivot.position).normalized;
         
-        skill.Use(_shootingPivot.position, ray.direction);
+        skill.Use(_shootingPivot.position, dir);
     }
 
     private void GetMoveDirection(Vector2 dir)
