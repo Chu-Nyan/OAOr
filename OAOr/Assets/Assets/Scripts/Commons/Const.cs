@@ -11,4 +11,8 @@ public static class Const
     public const string UnitDataContainer = "UnitDataContainer";
     public const string BuffDataContainer = "BuffDataContainer";
     public const string SkillDataContainer = "SkillDataContainer";
+
+    // 정수
+    public const int PlayerID = 100000;
+    public const int NPCID = 110000;
 }

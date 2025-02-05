@@ -23,11 +23,11 @@ public class ProjectileGenerator : Singleton<ProjectileGenerator>
         _buffData = new Dictionary<BuffType, BuffData>();
     }
 
-    public ProjectileGenerator Ready(Skill skill)
+    public ProjectileGenerator Ready(Skill skill, int owner)
     {
         _new = _pool.Dequeue();
         var skillData = skill.SkillData;
-        _new.Data = new(skillData.SkillType, true,skillData.Damage, skillData.ProgectileSpeed);
+        _new.Data = new(skillData.SkillType, owner, skillData.CanPenetration, skillData.Damage, skillData.ProgectileSpeed);
         foreach (var item in skillData.Buffs)
         {
             _new.AddBuff(item);

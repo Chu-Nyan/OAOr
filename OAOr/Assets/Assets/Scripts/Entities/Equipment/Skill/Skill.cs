@@ -14,10 +14,10 @@ public class Skill
         _skillData = skillData;
     }
 
-    public void Use(Vector3 shootPos, Vector3 forward)
+    public void Use(int id, Vector3 shootPos, Vector3 forward)
     {
         var pro = ProjectileGenerator.Instance
-            .Ready(this)
+            .Ready(this, id)
             .SetShootingTransform(shootPos, forward)
             .Generator();
     }

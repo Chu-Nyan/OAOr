@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private static float RemainTime = 5f;
+
     public ProjectileData Data;
     private readonly List<BuffType> _buffs = new();
+    private float _time;
 
     private event Action<Projectile> Destroyed;
 
     private void Update()
     {
-        Debug.DrawLine(transform.position, transform.forward,Color.white);
-        Debug.DrawLine(transform.position, transform.up,Color.red);
+        _time += Time.deltaTime;
         transform.position += transform.forward * Data.Speed * Time.deltaTime;
+        if (_time >= RemainTime)
+        {
+            Destory();
+        }
     }
 
     public void AddBuff(BuffType type)
@@ -27,22 +33,23 @@ public class Projectile : MonoBehaviour
         transform.rotation = qu;
     }
 
-    private void Hit(IStatProvider provider)
-    {
-        foreach (var type in _buffs)
-        {
-            var buff = BuffGenerator.Instance.Generate(type);
-            provider.Status.ApplyBuff(buff);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        Hit(other.GetComponent<IStatProvider>());
+        // 플래그 체크
+        if (other.TryGetComponent<IStatProvider>(out var provider) == true && provider.Status.ID != Data.OwnerID)
+        {
+            Debug.Log(other.gameObject.layer);
+            provider.Status.Hit(Data.Damage, _buffs);
+            if (Data.CanPenetration == false)
+            {
+                Destory();
+            }
+        }
     }
 
     public void Destory()
     {
+        _time = 0;
         Destroyed?.Invoke(this);
         Destroyed = null;
         gameObject.SetActive(false);

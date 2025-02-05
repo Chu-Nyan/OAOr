@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class SkillData
 {
     public SkillType SkillType;
+    public bool CanPenetration;
     public float Damage;
     public float ProgectileSpeed;
     public List<BuffType> Buffs;

@@ -14,8 +14,8 @@ public class NPCController : MonoBehaviour, IStatProvider
         get => _status;
     }
 
-    public NPCController()
+    public void Init(int id)
     {
-        _status = new(UnitType.Enemy);
+        _status = new(id);
     }
 }

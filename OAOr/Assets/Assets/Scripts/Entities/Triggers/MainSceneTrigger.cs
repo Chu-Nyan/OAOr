@@ -23,6 +23,7 @@ public class MainSceneTrigger : MonoBehaviour
         new InputManager();
         new ProjectileGenerator();
         new BuffGenerator();
+        new NPCGenerator();
 
         gameObject.AddComponent<BuffTimer>();
     }
@@ -30,11 +31,11 @@ public class MainSceneTrigger : MonoBehaviour
     private void InstantiateObject()
     {
         _playerController = Instantiate(DataManager.Instance.LoadAsset<PlayerController>(Const.PlayerPrefab));
+        var npc = NPCGenerator.Instance.Ready(UnitType.Enemy).Generate();
     }
 
     private void InitManager()
     {
-        NPCGenerator.Instance.Init(DataManager.Instance.UnitDataContainer);
         ProjectileGenerator.Instance.Init();
         BuffGenerator.Instance.Init();
     }

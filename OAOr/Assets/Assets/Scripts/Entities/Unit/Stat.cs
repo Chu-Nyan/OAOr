@@ -50,6 +50,6 @@ public class Stat
     private void Refresh()
     {
         ModificationValue = MathF.Round((DefalutValue + _plusValue) * _multiplyValue, 1);
-        UnityEngine.Debug.Log($"최종값 : {ModificationValue} 기본값 : {DefalutValue} 합연산 : {_plusValue} 곱연산 : {_multiplyValue}");
+        //UnityEngine.Debug.Log($"최종값 : {ModificationValue} 기본값 : {DefalutValue} 합연산 : {_plusValue} 곱연산 : {_multiplyValue}");
     }
 }

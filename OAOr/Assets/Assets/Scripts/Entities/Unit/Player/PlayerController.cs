@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IStatProvider
 
     public void Awake()
     {
-        _status = new(UnitType.Player);
+        _status = new(Const.PlayerID);
     }
 
     public void Init(UnitStatusDTO dto, CameraController camera)

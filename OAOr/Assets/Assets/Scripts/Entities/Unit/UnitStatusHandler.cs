@@ -2,19 +2,45 @@
 
 public class UnitStatus
 {
+    private readonly int _id;
     private UnitType _type;
     private readonly Dictionary<StatType, Stat> _stats;
     private readonly List<Buff> _buffs;
+
+    public int ID
+    {
+        get => _id;
+    }
 
     public Stat this[StatType type] 
     { 
         get => _stats[type];
     }
 
-    public UnitStatus(UnitType type)
+    public UnitStatus(int id)
     {
         _buffs = new();
         _stats = Utilities.GenerateStats();
+        _id = id;
+    }
+
+    public void Init(UnitType type)
+    {
+        _type = type;
+    }
+
+    public void Hit(List<BuffType> buffs)
+    {
+        foreach (var type in buffs)
+        {
+            var buff = BuffGenerator.Instance.Generate(type);
+            ApplyBuff(buff);
+        }
+    }
+
+    public void Hit(float dmg, List<BuffType> buffs)
+    {
+        Hit(buffs);
     }
 
     public void InitData(UnitStatusDTO dto)

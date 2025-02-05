@@ -52,7 +52,7 @@ public class PlayerBehaviour
         if (Physics.Raycast(ray, out var hitinfo) == true)
             dir = (hitinfo.point - _shootingPivot.position).normalized;
 
-        skill.Use(_shootingPivot.position, dir);
+        skill.Use(_status.ID, _shootingPivot.position, dir);
     }
 
     private void GetMoveDirection(Vector2 dir)
