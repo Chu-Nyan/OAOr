@@ -15,7 +15,11 @@ public class ProjectileGenerator : Singleton<ProjectileGenerator>
         {
             var prefab = DataManager.Instance.LoadAsset<Projectile>(Const.ProjectilePrefab);
             return GameObject.Instantiate<Projectile>(prefab);
-        });
+        },(a) =>
+        {
+            a.gameObject.SetActive(true);
+        }
+        );
     }
 
     public void Init()
@@ -26,13 +30,13 @@ public class ProjectileGenerator : Singleton<ProjectileGenerator>
     public ProjectileGenerator Ready(Skill skill, int owner)
     {
         _new = _pool.Dequeue();
+        _new.RegisterDestroyed(Enqueue);
         var skillData = skill.SkillData;
         _new.Data = new(skillData.SkillType, owner, skillData.CanPenetration, skillData.Damage, skillData.ProgectileSpeed);
         foreach (var item in skillData.Buffs)
         {
             _new.AddBuff(item);
         }
-
         return this;
     }
 
@@ -49,4 +53,8 @@ public class ProjectileGenerator : Singleton<ProjectileGenerator>
         return _new;
     }
 
+    private void Enqueue(Projectile item)
+    {
+        _pool.Enqueue(item);
+    }
 }

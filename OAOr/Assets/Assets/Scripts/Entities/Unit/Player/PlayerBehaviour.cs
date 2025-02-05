@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PlayerBehaviour
@@ -16,6 +17,7 @@ public class PlayerBehaviour
     private Vector2 _moveDirection;
     private bool _isMoveing;
     private Transform _aimGuide;
+    private int ExcloudeAimLayer;
 
     private event Action FixedUpdated;
 
@@ -32,6 +34,8 @@ public class PlayerBehaviour
         _cameraController = cameraController;
 
         FixedUpdated += Move;
+
+        ExcloudeAimLayer = ~LayerMask.GetMask("Projectile");
     }
 
     public void RegisterMovementActions()
@@ -49,7 +53,7 @@ public class PlayerBehaviour
         var skill = new Skill(DataManager.Instance.SkillDataContainer[SkillType.FireBall]);
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
         var dir = ray.direction;
-        if (Physics.Raycast(ray, out var hitinfo) == true)
+        if (Physics.Raycast(ray, out var hitinfo, 1000, ExcloudeAimLayer) == true)
             dir = (hitinfo.point - _shootingPivot.position).normalized;
 
         skill.Use(_status.ID, _shootingPivot.position, dir);
@@ -112,11 +116,11 @@ public class PlayerBehaviour
     private void TrackAimg()
     {
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
-        if (Physics.Raycast(ray, out var hitinfo) == true)
+        if (Physics.Raycast(ray, out var hitinfo, 10, ExcloudeAimLayer) == true)
         {
             var dir = (hitinfo.point - _shootingPivot.position).normalized;
             ray = new Ray(_shootingPivot.position, dir);
-            var result = Physics.Raycast(ray, out hitinfo, 1);
+            var result = Physics.Raycast(ray, out hitinfo, 1, ExcloudeAimLayer);
             if (result == true)
                 _aimGuide.transform.position = hitinfo.point;
 
